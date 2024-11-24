@@ -5,27 +5,31 @@
 //  Created by katsumi on 2024/11/24.
 //
 
+import ComposableArchitecture
+import GitHubSearchScene
 import SwiftUI
 import TimerScene
 import TodoScene
-import GitHubSearchScene
 
 public struct AppFeature: View {
     public init() {}
     public var body: some View {
         TabView {
-            TimerScene()
-                .tabItem {
-                    Image(systemName: "timer")
-                    Text("Timer")
-                }
-            
+            TimerScene(store: Store(
+                initialState: TimerReducer.State(),
+                reducer: { TimerReducer() }
+            ))
+            .tabItem {
+                Image(systemName: "timer")
+                Text("Timer")
+            }
+
             TodoScene()
                 .tabItem {
                     Image(systemName: "checklist")
                     Text("Todo")
                 }
-            
+
             GitHubSearchScene()
                 .tabItem {
                     Image(systemName: "chevron.left.forwardslash.chevron.right")
