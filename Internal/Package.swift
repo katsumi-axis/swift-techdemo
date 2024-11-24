@@ -37,6 +37,15 @@ let package = Package(
                     name: "ComposableArchitecture",
                     package: "swift-composable-architecture")
             ]),
+        .testTarget(
+            name: "TimerSceneTests",
+            dependencies: [
+                .product(
+                    name: "ComposableArchitecture",
+                    package: "swift-composable-architecture"),
+                "TimerScene"
+            ]
+        ),
         .target(
             name: "TodoScene",
             dependencies: [
