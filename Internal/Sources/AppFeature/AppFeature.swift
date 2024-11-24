@@ -15,10 +15,12 @@ public struct AppFeature: View {
     public init() {}
     public var body: some View {
         TabView {
-            TimerScene(store: Store(
-                initialState: TimerReducer.State(),
-                reducer: { TimerReducer() }
-            ))
+            TimerScene(
+                store: Store(
+                    initialState: TimerReducer.State(),
+                    reducer: { TimerReducer() }
+                )
+            )
             .tabItem {
                 Image(systemName: "timer")
                 Text("Timer")
