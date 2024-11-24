@@ -9,21 +9,51 @@ let package = Package(
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "Internal",
-            targets: ["Internal"]),
+            name: "AppFeature",
+            targets: ["AppFeature"])
     ],
     dependencies: [
-        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.6.0"),
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "1.16.1"),
+        .package(
+            url: "https://github.com/pointfreeco/swift-dependencies",
+            from: "1.6.0"),
+        .package(
+            url: "https://github.com/pointfreeco/swift-composable-architecture",
+            from: "1.16.1"),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "Internal"),
-        .testTarget(
-            name: "InternalTests",
-            dependencies: ["Internal"]
-        ),
+            name: "AppFeature",
+            dependencies: [
+                .product(
+                    name: "ComposableArchitecture",
+                    package: "swift-composable-architecture"),
+                "TimerScene",
+                "TodoScene",
+                "GitHubSearchScene",
+            ]),
+        .target(
+            name: "TimerScene",
+            dependencies: [
+                .product(
+                    name: "ComposableArchitecture",
+                    package: "swift-composable-architecture")
+            ]),
+        .target(
+            name: "TodoScene",
+            dependencies: [
+                .product(
+                    name: "ComposableArchitecture",
+                    package: "swift-composable-architecture")
+            ]),
+        .target(
+            name: "GitHubSearchScene",
+            dependencies: [
+                .product(
+                    name: "ComposableArchitecture",
+                    package: "swift-composable-architecture")
+            ]),
+
     ]
 )

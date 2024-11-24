@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		CBE4BA622CF2C820007CAA63 /* AppFeature in Frameworks */ = {isa = PBXBuildFile; productRef = CBE4BA612CF2C820007CAA63 /* AppFeature */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		CB6E47332CF194B6007A9BCD /* Internal */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Internal; sourceTree = SOURCE_ROOT; };
 		CB6E47342CF19803007A9BCD /* swift-techdemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "swift-techdemo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -24,6 +28,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CBE4BA622CF2C820007CAA63 /* AppFeature in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -36,7 +41,15 @@
 				CB6E47332CF194B6007A9BCD /* Internal */,
 				CB6E46F32CF168F7007A9BCD /* iOS */,
 				CB6E47342CF19803007A9BCD /* swift-techdemo.app */,
+				CBE4BA602CF2C820007CAA63 /* Frameworks */,
 			);
+			sourceTree = "<group>";
+		};
+		CBE4BA602CF2C820007CAA63 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -59,6 +72,7 @@
 			);
 			name = "swift-techdemo";
 			packageProductDependencies = (
+				CBE4BA612CF2C820007CAA63 /* AppFeature */,
 			);
 			productName = "swift-techdemo";
 			productReference = CB6E47342CF19803007A9BCD /* swift-techdemo.app */;
@@ -238,7 +252,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = iOS/swift_techdemo.entitlements;
+				CODE_SIGN_ENTITLEMENTS = iOS/techdemo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"iOS/Preview Content\"";
@@ -277,7 +291,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = iOS/swift_techdemo.entitlements;
+				CODE_SIGN_ENTITLEMENTS = iOS/techdemo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"iOS/Preview Content\"";
@@ -333,6 +347,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CBE4BA612CF2C820007CAA63 /* AppFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppFeature;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = CB6E46E92CF168F7007A9BCD /* Project object */;
 }

@@ -1,24 +1,8 @@
-//
-//  ContentView.swift
-//  swift-techdemo
-//
-//  Created by axis on 2024/11/23.
-//
-
 import SwiftUI
+import AppFeature
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
+        AppFeature()
     }
-}
-
-#Preview {
-    ContentView()
 }
