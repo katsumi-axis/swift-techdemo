@@ -11,6 +11,7 @@ import SwiftUI
 import TimerScene
 import TodoScene
 
+
 public struct AppFeature: View {
     public init() {}
     public var body: some View {
@@ -31,8 +32,7 @@ public struct AppFeature: View {
                     Image(systemName: "checklist")
                     Text("Todo")
                 }
-
-            GitHubSearchScene()
+            GitHubSearchScene(store: .init(initialState: GitHubSearchReducer.State(), reducer: { GitHubSearchReducer() }))
                 .tabItem {
                     Image(systemName: "chevron.left.forwardslash.chevron.right")
                     Text("GitHub")

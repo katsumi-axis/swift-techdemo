@@ -10,36 +10,33 @@ import ComposableArchitecture
 import Domain
 
 public struct GitHubSearchScene: View {
-    public init() {}
-    
-    @State private var repositories = GitHubRepository.mockData
-    @State private var searchText = ""
-    
-    private var filteredRepositories: [GitHubRepository] {
-        if searchText.isEmpty {
-            return repositories
-        } else {
-            return repositories.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
-        }
+    public init(store: StoreOf<GitHubSearchReducer>) {
+        self.store = store
     }
-    
+    let store: StoreOf<GitHubSearchReducer>
+
     public var body: some View {
         NavigationView {
-            List(filteredRepositories, id: \.id) { repo in
+            List(store.repositories, id: \.id) { user in
                 VStack(alignment: .leading) {
-                    Text(repo.name)
+                    Text(user.name)
                         .font(.headline)
-                    Text(repo.description ?? "No description")
+                    Text(user.bio ?? "No bio")
                         .font(.subheadline)
                         .foregroundColor(.gray)
-                    Text("Stars: \(repo.stargazersCount)")
+                    Text("Followers: \(user.followers)")
                         .font(.caption)
                         .foregroundColor(.gray)
                 }
             }
             .navigationTitle("GitHub")
             .searchable(
-                text: $searchText,
+                text: Binding(
+                    get: { store.query },
+                    set: { newValue in
+                        
+                    }
+                ),
                 placement: .navigationBarDrawer(displayMode: .always),
                 prompt: "Search repositories"
             )
@@ -48,5 +45,5 @@ public struct GitHubSearchScene: View {
 }
 
 #Preview {
-    GitHubSearchScene()
+    GitHubSearchScene(store: .init(initialState: GitHubSearchReducer.State(), reducer: { GitHubSearchReducer() })) 
 }
