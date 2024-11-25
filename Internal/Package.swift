@@ -31,6 +31,12 @@ let package = Package(
                 "GitHubSearchScene",
             ]),
         .target(
+            name: "Domain"),
+        .target(
+            name: "Repository",
+            dependencies: ["Domain"]
+        ),
+        .target(
             name: "TimerScene",
             dependencies: [
                 .product(
@@ -58,7 +64,9 @@ let package = Package(
             dependencies: [
                 .product(
                     name: "ComposableArchitecture",
-                    package: "swift-composable-architecture")
+                    package: "swift-composable-architecture"),
+                "Domain",
+                "Repository",
             ]),
 
     ]
