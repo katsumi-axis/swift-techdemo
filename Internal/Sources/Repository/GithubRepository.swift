@@ -13,10 +13,15 @@ public struct GitHubRepository: GitHubRepositoryProtocol {
     public init() {}
   
     public func searchRepositories(query: String) async throws -> [GithubUser] {
+        
+        if (query == ""){
+            return []
+        }
+        
         let url = URL(string: "https://api.github.com/user/\(query)")!
-        let (data, _) = try await URLSession.shared.data(from: url)
-        let repositories = try JSONDecoder().decode([GithubUser].self, from: data)
-        return repositories
+        let (data, response) = try await URLSession.shared.data(from: url)
+        let repositories = try JSONDecoder().decode(GithubUser.self, from: data)
+        return [repositories]
     }
 }
 

@@ -55,9 +55,12 @@ public struct GitHubSearchReducer: Reducer, Sendable {
 
             return .run { send in
                 let repository = GitHubRepository()
-                let results = try await repository.searchRepositories(
-                    query: query)
-                await send(.searchResponse(.success(results)))
+                do {
+                    let results = try await repository.searchRepositories(query: query)
+                    await send(.searchResponse(.success(results)))
+                } catch {
+                    await send(.searchResponse(.failure(error)))
+                }
             }
 
         case .searchResponse(.success(let repositories)):

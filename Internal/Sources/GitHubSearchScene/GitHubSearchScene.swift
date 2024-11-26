@@ -34,7 +34,7 @@ public struct GitHubSearchScene: View {
                 text: Binding(
                     get: { store.query },
                     set: { newValue in
-                        
+                        store.send(.queryChanged(newValue))
                     }
                 ),
                 placement: .navigationBarDrawer(displayMode: .always),
