@@ -52,16 +52,18 @@ public struct GitHubSearchReducer: Reducer, Sendable {
         case .search:
             state.isLoading = true
             let query = state.query
-
-            return .run { send in
-                let repository = GitHubRepository()
-                do {
-                    let results = try await repository.searchRepositories(query: query)
-                    await send(.searchResponse(.success(results)))
-                } catch {
-                    await send(.searchResponse(.failure(error)))
-                }
-            }
+            
+            return .none
+            
+//            return .run { send in
+//                let repository = GitHubRepository()
+//                do {
+//                    let results = try await repository.searchRepositories(query: query)
+//                    await send(.searchResponse(.success(results)))
+//                } catch {
+//                    await send(.searchResponse(.failure(error)))
+//                }
+//            }
 
         case .searchResponse(.success(let repositories)):
             state.repositories = repositories
