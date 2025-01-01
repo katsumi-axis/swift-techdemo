@@ -5,7 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "Internal",
-    platforms: [.iOS(.v16)],
+    platforms: [.iOS(.v17)],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
@@ -57,7 +57,8 @@ let package = Package(
             dependencies: [
                 .product(
                     name: "ComposableArchitecture",
-                    package: "swift-composable-architecture")
+                    package: "swift-composable-architecture"),
+                "Domain",
             ]),
         .target(
             name: "GitHubSearchScene",

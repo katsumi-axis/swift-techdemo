@@ -21,7 +21,14 @@ public struct TodoScene: View {
         NavigationView {
             List {
                 ForEach(store.todos) { todo in
-                    Text(todo.title)
+                    HStack {
+                        Button(action: {
+                            store.send(.toggleTodo(id: todo.id))
+                        }) {
+                            Image(systemName: todo.isDone ? "checkmark.circle.fill" : "circle")
+                        }
+                        Text(todo.title)
+                    }
                 }
                 .onDelete(perform: { indexSet in
                     for index in indexSet {
@@ -42,11 +49,5 @@ public struct TodoScene: View {
             }
             .navigationTitle("Todo List")
         }
-    }
-    
-    func addTodo() {
-    }
-    
-    func deleteTodo(at offsets: IndexSet) {
     }
 }
