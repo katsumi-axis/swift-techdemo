@@ -11,7 +11,7 @@ public struct GitHubSearchReducer: Reducer, Sendable {
     @ObservableState
     public struct State {
         public init(
-            query: String = "", repositories: [GithubUser] = [],
+            query: String = "", repositories: [GitHubRepo] = [],
             isLoading: Bool = false
         ) {
             self.query = query
@@ -19,7 +19,7 @@ public struct GitHubSearchReducer: Reducer, Sendable {
             self.isLoading = isLoading
         }
         var query: String
-        var repositories: [GithubUser]
+        var repositories: [GitHubRepo]
         var isLoading: Bool
     }
 
@@ -30,7 +30,7 @@ public struct GitHubSearchReducer: Reducer, Sendable {
     public enum Action {
         case queryChanged(String)
         case search
-        case searchResponse(Result<[GithubUser], Error>)
+        case searchResponse(Result<[GitHubRepo], Error>)
     }
 
     @Dependency(\.continuousClock) var clock
@@ -43,27 +43,21 @@ public struct GitHubSearchReducer: Reducer, Sendable {
 
         case .queryChanged(let query):
             state.query = query
-            return .run { send in
-                try await clock.sleep(for: .milliseconds(300))
-                await send(.search)
-            }
-            .cancellable(id: CancelID.debounce)
+            return .none
 
         case .search:
             state.isLoading = true
             let query = state.query
             
-            return .none
-            
-//            return .run { send in
-//                let repository = GitHubRepository()
-//                do {
-//                    let results = try await repository.searchRepositories(query: query)
-//                    await send(.searchResponse(.success(results)))
-//                } catch {
-//                    await send(.searchResponse(.failure(error)))
-//                }
-//            }
+            return .run { send in
+                let repository = GitHubRepository()
+                do {
+                    let results = try await repository.searchRepositories(query: query)
+                    await send(.searchResponse(.success(results)))
+                } catch {
+                    await send(.searchResponse(.failure(error)))
+                }
+            }
 
         case .searchResponse(.success(let repositories)):
             state.repositories = repositories

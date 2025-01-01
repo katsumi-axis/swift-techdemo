@@ -5,9 +5,9 @@
 //  Created by katsumi on 2024/11/24
 //
 
-import SwiftUI
 import ComposableArchitecture
 import Domain
+import SwiftUI
 
 public struct GitHubSearchScene: View {
     public init(store: StoreOf<GitHubSearchReducer>) {
@@ -17,33 +17,36 @@ public struct GitHubSearchScene: View {
 
     public var body: some View {
         NavigationView {
-            List(store.repositories, id: \.id) { user in
+            List(store.repositories, id: \.id) { repo in
                 VStack(alignment: .leading) {
-                    Text(user.name)
+                    Text(repo.name)
                         .font(.headline)
-                    Text(user.bio ?? "No bio")
+                    Text(repo.url)
                         .font(.subheadline)
                         .foregroundColor(.gray)
-                    Text("Followers: \(user.followers)")
-                        .font(.caption)
-                        .foregroundColor(.gray)
+                    Text(String(repo.stargazers_count))
+                        .font(.subheadline)
                 }
             }
             .navigationTitle("GitHub")
             .searchable(
                 text: Binding(
                     get: { store.query },
-                    set: { newValue in
-                        store.send(.queryChanged(newValue))
-                    }
+                    set: { store.send(.queryChanged($0)) }
                 ),
                 placement: .navigationBarDrawer(displayMode: .always),
                 prompt: "Search repositories"
             )
+            .onSubmit(of: .search) {
+                store.send(.search)
+            }
         }
     }
 }
 
 #Preview {
-    GitHubSearchScene(store: .init(initialState: GitHubSearchReducer.State(), reducer: { GitHubSearchReducer() })) 
+    GitHubSearchScene(
+        store: .init(
+            initialState: GitHubSearchReducer.State(),
+            reducer: { GitHubSearchReducer() }))
 }
