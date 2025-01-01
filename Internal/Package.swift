@@ -16,6 +16,9 @@ let package = Package(
         .package(
             url: "https://github.com/pointfreeco/swift-composable-architecture",
             from: "1.17.0"),
+        .package(
+            url: "https://github.com/stephencelis/SQLite.swift",
+            from: "0.15.3"),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -34,7 +37,9 @@ let package = Package(
             name: "Domain"),
         .target(
             name: "Repository",
-            dependencies: ["Domain"]
+            dependencies: [
+                .product(name: "SQLite", package: "SQLite.swift"), "Domain",
+            ]
         ),
         .target(
             name: "TimerScene",
@@ -49,7 +54,7 @@ let package = Package(
                 .product(
                     name: "ComposableArchitecture",
                     package: "swift-composable-architecture"),
-                "TimerScene"
+                "TimerScene",
             ]
         ),
         .target(
@@ -58,7 +63,9 @@ let package = Package(
                 .product(
                     name: "ComposableArchitecture",
                     package: "swift-composable-architecture"),
+                .product(name: "SQLite", package: "SQLite.swift"),
                 "Domain",
+
             ]),
         .target(
             name: "GitHubSearchScene",

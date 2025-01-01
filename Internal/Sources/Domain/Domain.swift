@@ -25,3 +25,25 @@ public struct GitHubRepo: Codable {
 }
 
 
+@Model
+public final class TodoItem: Identifiable, Equatable {
+    public var id: UUID
+    public var title: String
+    public var isDone: Bool
+    public var timestamp: Date
+
+    public init(id: UUID = UUID(), title: String, isDone: Bool = false, timestamp: Date = .now) {
+        self.id = id
+        self.title = title
+        self.isDone = isDone
+        self.timestamp = timestamp
+    }
+
+    public static func == (lhs: TodoItem, rhs: TodoItem) -> Bool {
+        return lhs.id == rhs.id &&
+               lhs.title == rhs.title &&
+               lhs.isDone == rhs.isDone &&
+               lhs.timestamp == rhs.timestamp
+    }
+}
+

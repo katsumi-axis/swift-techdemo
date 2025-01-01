@@ -5,8 +5,8 @@
 //  Created by katsumi on 2024/11/24.
 //
 
-import SwiftUI
 import ComposableArchitecture
+import SwiftUI
 
 public struct TodoScene: View {
 
@@ -16,7 +16,7 @@ public struct TodoScene: View {
     let store: StoreOf<TodoSceneReducer>
 
     @State private var newTodo = ""
-    
+
     public var body: some View {
         NavigationView {
             List {
@@ -25,14 +25,17 @@ public struct TodoScene: View {
                         Button(action: {
                             store.send(.toggleTodo(id: todo.id))
                         }) {
-                            Image(systemName: todo.isDone ? "checkmark.circle.fill" : "circle")
+                            Image(
+                                systemName: todo.isDone
+                                    ? "checkmark.circle.fill" : "circle")
                         }
                         Text(todo.title)
                     }
                 }
                 .onDelete(perform: { indexSet in
-                    for index in indexSet {
-                        store.send(.deleteTodo(from: index))
+                    indexSet.forEach { index in
+                        guard index < store.todos.count else { return }
+                        store.send(.deleteTodo(id: store.todos[index].id))
                     }
                 })
 
@@ -48,6 +51,9 @@ public struct TodoScene: View {
                 }
             }
             .navigationTitle("Todo List")
+            .onAppear {
+                     store.send(.onAppear)
+            }
         }
     }
 }
