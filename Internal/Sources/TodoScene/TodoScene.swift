@@ -6,29 +6,38 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 public struct TodoScene: View {
-    @State private var todos = [
-        "SwiftUIを学ぶ",
-        "アプリを作る",
-        "コードをGitHubに上げる"
-    ]
+
+    public init(store: StoreOf<TodoSceneReducer>) {
+        self.store = store
+    }
+    let store: StoreOf<TodoSceneReducer>
+
     @State private var newTodo = ""
     
-    public init() {}
     public var body: some View {
         NavigationView {
             List {
-                ForEach(todos, id: \.self) { todo in
-                    Text(todo)
+                ForEach(store.todos) { todo in
+                    Text(todo.title)
                 }
-                .onDelete(perform: deleteTodo)
-                
+                .onDelete(perform: { indexSet in
+                    for index in indexSet {
+                        store.send(.deleteTodo(from: index))
+                    }
+                })
+
                 HStack {
                     TextField("新しいTodo", text: $newTodo)
-                    Button(action: addTodo) {
+                    Button(action: {
+                        store.send(.addTodo(title: newTodo))
+                        newTodo = ""
+                    }) {
                         Image(systemName: "plus.circle.fill")
                     }
+                    .disabled(newTodo.isEmpty)
                 }
             }
             .navigationTitle("Todo List")
@@ -36,13 +45,8 @@ public struct TodoScene: View {
     }
     
     func addTodo() {
-        if !newTodo.isEmpty {
-            todos.append(newTodo)
-            newTodo = ""
-        }
     }
     
     func deleteTodo(at offsets: IndexSet) {
-        todos.remove(atOffsets: offsets)
     }
 }

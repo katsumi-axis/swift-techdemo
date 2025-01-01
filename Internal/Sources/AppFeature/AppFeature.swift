@@ -11,7 +11,6 @@ import SwiftUI
 import TimerScene
 import TodoScene
 
-
 public struct AppFeature: View {
     public init() {}
     public var body: some View {
@@ -27,7 +26,7 @@ public struct AppFeature: View {
                 Text("Timer")
             }
 
-            TodoScene()
+            TodoScene(store: .init(initialState: TodoSceneReducer.State(), reducer: { TodoSceneReducer() }))
                 .tabItem {
                     Image(systemName: "checklist")
                     Text("Todo")
